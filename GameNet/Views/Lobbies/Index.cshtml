@@ -1,0 +1,98 @@
+﻿@model IEnumerable<GameNet.Models.Platform.Lobby>
+@using GameNet.Models.Platform
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Créer un nouvel lobby</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date de création
+            </th>
+            <th>
+                Nom du lobby
+            </th>
+            <th>
+                Jeu sélectionné
+            </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th> *@
+            <th>
+                Mot de passe
+            </th>
+            <th>
+                Privatisation
+            </th>
+            <th>
+                L'état courant
+            </th>
+            <th>
+                Nombre de joueurs
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedBoardGame)
+            </td>
+            @* <td>
+                <a href="@Html.DisplayFor(modelItem => item.Link)">Cliquer-ici</a>
+            </td> *@
+            <td>
+                @Html.DisplayFor(modelItem => item.Pass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPrivate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => @item.GetPlayersWithAccessInLobby().Count)
+            </td>
+            <td>
+                @* <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> | *@
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    @if (item.State == State.READY)
+                    {
+                        <a asp-action="Launch" asp-route-id="@item.ID">Launch</a>
+                    }
+                    else if (item.State == State.LAUNCHED)
+                    {
+                        <a asp-action="Launch" asp-route-id="@item.ID">Play</a>
+                    }
+                    else if (item.State == State.WAITED)
+                    {
+                        <a asp-action="Launch" asp-route-id="@item.ID">Join</a>
+                    }
+                    else if (item.State == State.FINISHED)
+                    {
+                        <a asp-action="Launch" asp-route-id="@item.ID">Details</a>
+                    }
+
+                    |
+                @* <a asp-action="Participe" asp-route-id="@item.ID">Participe</a> | *@
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
