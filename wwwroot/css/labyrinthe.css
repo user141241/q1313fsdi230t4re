@@ -1,0 +1,40 @@
+﻿.maze-container {
+    display: grid;
+    grid-template-columns: repeat(10, 32px);
+    grid-gap: 0;
+    position: relative;
+    background-repeat: repeat;
+    background-image: url(/images/labyrinthe/texture_sol.png)
+}
+
+.maze-tile {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    background-size: cover;
+}
+
+.multiple-players {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.player {
+    aspect-ratio: 1;
+    width: 80%;
+    border-radius: 50%;
+    border: 1px solid white;
+    z-index: 10;
+}
+
+.flag {
+    background-image: url(/images/labyrinthe/flag_endpoint.png);
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
