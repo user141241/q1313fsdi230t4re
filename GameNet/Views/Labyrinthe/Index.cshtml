@@ -1,0 +1,37 @@
+﻿@model GameNet.Models.Games.Labyrinthe.LabyrintheViewModel
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/labyrinthe.js"></script>
+}
+
+@section Css {
+    <link rel="stylesheet" href="~/css/labyrinthe.css" />
+}
+
+@{
+    ViewData["Title"] = "Labyrinthe";
+}
+<h1>Labyrinthe</h1>
+<div class="maze-container">
+    @for (int y = 0; y < Model.Height; y++)
+    {
+        @for (int x = 0; x < Model.Width; x++)
+        {
+            var tile = Model.GetTileAt(y, x);
+            var imageId = tile.GetImageId();
+            var players = Model.Players.Where(p => p.CurrentTile == tile);
+            <div class="maze-tile @( players.Count() > 1 ? "multiple-players" : "")" style="background-image: url('@("images/labyrinthe/tile" + imageId + ".png")');">
+                @foreach (var player in players)
+                {
+                    <div class="player" style="background-color: red;"></div>
+                }
+                @if (Model.EndTile == tile)
+                {
+                    <div class="flag"></div>
+                }
+            </div>
+        }
+    }
+</div>
+
+
